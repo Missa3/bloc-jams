@@ -29,6 +29,21 @@ var albumMarconi = {
     ]
 };
 
+var albumSagan = {
+    title: 'The Planets',
+    artist: 'Carl Sagan',
+    label: 'OS',
+    year: '1981',
+    albumArtUrl: 'assets/images/album_covers/09.png',
+    songs: [
+        { title: 'Mercury', duration: '4:25' },
+        { title: 'Venus', duration: '3:14' },
+        { title: 'Earth', duration: '5:01' },
+        { title: 'Mars', duration: '4:21'},
+        { title: 'Jupiter', duration: '2:30'}
+    ]
+};
+
 var createSongRow = function(songNumber, songName, songLength) {
     var template =
         '<tr class="album-view-song-item">'
@@ -41,14 +56,15 @@ var createSongRow = function(songNumber, songName, songLength) {
     return template;
 };
 
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+
+
 var setCurrentAlbum = function(album) {
     // #1
-    var albumTitle = document.getElementsByClassName('album-view-title')[0];
-    var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-    var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-    var albumImage = document.getElementsByClassName('album-cover-art')[0];
-    var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
-
     // #2
     albumTitle.firstChild.nodeValue = album.title;
     albumArtist.firstChild.nodeValue = album.artist;
@@ -66,4 +82,17 @@ var setCurrentAlbum = function(album) {
 
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
+    
+   var albums= [albumPicasso,albumMarconi,albumSagan]
+   var index= 1;
+    albumImage.addEventListener('click', function() { 
+        setCurrentAlbum(albums[index]);
+            index++;
+        if(index == albums.length){
+            index = 0;
+        }
+    });                               
 };
+
+
+                        
