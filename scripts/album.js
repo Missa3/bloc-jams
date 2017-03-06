@@ -219,6 +219,7 @@ var trackIndex = function(album, song) {
     return album.songs.indexOf(song);
 };
 
+
 var nextSong = function() {
 
     var getLastSongNumber = function(index) {
@@ -280,8 +281,24 @@ var previousSong = function() {
 
 };
 
+
 var setTotalTimeInPlayerBar = function(totalTime) {
     $('.total-time').text(filterTimeCode(currentSongFromAlbum.duration));
+}
+
+var togglePlayFromPlayerBar = function() {
+    var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
+    
+    if (currentSoundFile.isPaused()){
+        getSongNumberCell(currentlyPlayingSongNumber).html(pauseButtonTemplate);
+        currentSoundFile.play();
+        $playPauseBarButton.html(playerBarPauseButton);
+    } else {
+        getSongNumberCell(currentlyPlayingSongNumber).html(playButtonTemplate);
+        currentSoundFile.pause();
+        $playPauseBarButton.html(playerBarPlayButton);
+    }
+
 };
 
 var updatePlayerBarSong = function() {
@@ -308,11 +325,13 @@ var currentVolume = 80;
 
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
+var $playPauseBarButton = $('.main-controls .play-pause');
 
 $(document).ready(function() {
     setCurrentAlbum(albumPicasso);
     setupSeekBars();
     $previousButton.click(previousSong);
     $nextButton.click(nextSong);
+    $playPauseBarButton.click(togglePlayFromPlayerBar);
 });
 
